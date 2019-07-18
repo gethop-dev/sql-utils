@@ -3,7 +3,8 @@
             [clojure.spec.test.alpha :as stest]
             [clojure.test :refer :all]
             [duct.logger :as logger]
-            [magnet.sql-utils :as sql-utils]))
+            [magnet.sql-utils :as sql-utils])
+  (:import org.postgresql.util.PGobject))
 
 (def db-spec "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1")
 
@@ -70,4 +71,24 @@
       (let [sql-statement ["DELETE FROM role"]
             {:keys [success? processed-values]} (sql-utils/sql-execute! db-spec logger sql-statement)]
         (is (and success?
-                 (= (count roles) processed-values)))))))
+                 (= (count roles) processed-values)))))
+    (testing "keyword->pg-enum"
+      (let [result (sql-utils/keyword->pg-enum :test-keyword "test-enum")]
+        (is (and (instance? PGobject result)
+                 (= "test-enum" (.getType result))
+                 (= "test-keyword" (.getValue result))))))
+    (testing "map->pg-jsonb! (regular map)"
+      (let [result (sql-utils/map->pg-jsonb {:test-keyword "test-value"})]
+        (is (and (instance? PGobject result)
+                 (= "jsonb" (.getType result))
+                 (= "{\"test-keyword\":\"test-value\"}" (.getValue result))))))
+    (testing "map->pg-jsonb! (empty map)"
+      (let [result (sql-utils/map->pg-jsonb {})]
+        (is (and (instance? PGobject result)
+                 (= "jsonb" (.getType result))
+                 (= "{}" (.getValue result))))))
+    (testing "map->pg-jsonb! (nil)"
+      (let [result (sql-utils/map->pg-jsonb nil)]
+        (is (and (instance? PGobject result)
+                 (= "jsonb" (.getType result))
+                 (= "null" (.getValue result))))))))

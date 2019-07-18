@@ -81,7 +81,8 @@
     (.setType "jsonb")
     (.setValue json)))
 
-(s/def ::map->pg-jsonb-args (s/cat :m map?))
+(s/def ::nilable-map (s/nilable map?))
+(s/def ::map->pg-jsonb-args (s/cat :m ::nilable-map))
 (s/def ::map->pg-jsonb-ret ::pg-object)
 (s/fdef map->pg-jsonb
   :args ::map->pg-jsonb-args
@@ -90,7 +91,7 @@
 (defn map->pg-jsonb
   "Convert map `m` into a Postgresql jsonb compatible object."
   [m]
-  {:pre [(map? m)]}
+  {:pre [(s/valid? ::nilable-map m)]}
   (-> m
       json/generate-string
       json->pg-jsonb))
