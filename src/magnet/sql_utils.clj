@@ -172,18 +172,18 @@
     (try
       (let [count (first (jdbc/insert! db-spec table cols values convert-entities-option))
             msec (elapsed start)]
-        (log logger :info ::sql-execute!-success {:msec msec
-                                                  :count count
-                                                  :cols cols
-                                                  :values values})
+        (log logger :info ::sql-insert!-success {:msec msec
+                                                 :count count
+                                                 :cols cols
+                                                 :values values})
         {:success? true :inserted-values count})
       (catch Exception e
         (let [result {:success? false}
               msec (elapsed start)]
-          (log logger :error ::sql-execute!-error {:msec msec
-                                                   :ex-message (.getMessage e)
-                                                   :cols cols
-                                                   :values values})
+          (log logger :error ::sql-insert!-error {:msec msec
+                                                  :ex-message (.getMessage e)
+                                                  :cols cols
+                                                  :values values})
           result)))))
 
 (s/def ::sql-insert-multiple!-args (s/cat :db-spec ::db-spec
@@ -208,7 +208,7 @@
     (try
       (let [count (count (jdbc/insert-multi! db-spec table cols values convert-entities-option))
             msec (elapsed start)]
-        (log logger :info ::sql-multi-insert!-success {:msec msec
+        (log logger :info ::sql-insert-multi!-success {:msec msec
                                                        :count count
                                                        :cols cols
                                                        :values values})
@@ -216,7 +216,7 @@
       (catch Exception e
         (let [result {:success? false}
               msec (elapsed start)]
-          (log logger :error ::sql-multi-insert!-error {:msec msec
+          (log logger :error ::sql-insert-multi!-error {:msec msec
                                                         :ex-message (.getMessage e)
                                                         :cols cols
                                                         :values values})
@@ -248,18 +248,18 @@
     (try
       (let [count (first (jdbc/update! db-spec table set-map where-clause convert-entities-option))
             msec (elapsed start)]
-        (log logger :info ::sql-execute!-success {:msec msec
-                                                  :count count
-                                                  :set-map set-map
-                                                  :where-clause where-clause})
+        (log logger :info ::sql-update!-success {:msec msec
+                                                 :count count
+                                                 :set-map set-map
+                                                 :where-clause where-clause})
         {:success? true :processed-values count})
       (catch Exception e
         (let [result {:success? false}
               msec (elapsed start)]
-          (log logger :error ::sql-execute!-error {:msec msec
-                                                   :ex-message (.getMessage e)
-                                                   :set-map set-map
-                                                   :where-clause where-clause})
+          (log logger :error ::sql-update!-error {:msec msec
+                                                  :ex-message (.getMessage e)
+                                                  :set-map set-map
+                                                  :where-clause where-clause})
           result)))))
 
 (s/def ::sql-delete!-args (s/cat :db-spec ::db-spec
