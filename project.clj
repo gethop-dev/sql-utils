@@ -1,4 +1,4 @@
-(defproject magnet.sql-utils "0.1.0"
+(defproject magnet.sql-utils "0.2.0-SNAPSHOT"
   :description "A library designed as a thin convenience wapper over clojure.java.jdbc"
   :url "https://github.com/magnetcoop/sql-utils"
   :license {:name "Mozilla Public Licence 2.0"
