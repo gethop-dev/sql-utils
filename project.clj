@@ -19,7 +19,7 @@
                                       :password :env/clojars_password
                                       :sign-releases false}]]
   :codox
-  {:output-path "doc/api"
+  {:output-path "docs/api"
    :metadata {:doc/format :markdown}}
   :profiles
   {:dev {:plugins [[jonase/eastwood "0.3.4"]
