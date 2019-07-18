@@ -13,7 +13,7 @@ The logger must implement the [`duct.loggger/Logger`](https://github.com/duct-fr
 
 ## Usage
 
-See [API Docs](/doc/api) and [`clojure.java.jdbc`] documentation.
+See [API Docs](/doc/api) and [`clojure.java.jdbc`](https://github.com/clojure/java.jdbc) documentation.
 
 ## License
 
