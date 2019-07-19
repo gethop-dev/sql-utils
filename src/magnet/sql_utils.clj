@@ -96,6 +96,21 @@
       json/generate-string
       json->pg-jsonb))
 
+(s/def ::nilable-coll (s/nilable coll?))
+(s/def ::coll->pg-jsonb-args (s/cat :m ::nilable-coll))
+(s/def ::coll->pg-jsonb-ret ::pg-object)
+(s/fdef coll->pg-jsonb
+  :args ::coll->pg-jsonb-args
+  :ret  ::coll->pg-jsonb-ret)
+
+(defn coll->pg-jsonb
+  "Convert coll `c` into a Postgresql jsonb compatible object."
+  [c]
+  {:pre [(s/valid? ::nilable-coll c)]}
+  (-> c
+      json/generate-string
+      json->pg-jsonb))
+
 (s/def ::instant #(jt/instant? %))
 (s/def ::sql-timestamp #(instance? java.sql.Timestamp %))
 (s/def ::instant->sql-timestamp-args (s/cat :v ::instant))

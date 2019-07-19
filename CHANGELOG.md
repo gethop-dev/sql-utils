@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.3.1] - 2019-07-19
+
+### Added
+- Added a more general version of map->pg-jsonb, called coll->pg-jsonb. It accepts not only maps, but any Clojure collection.
+
+### Fixed
+- A couple of typos in README.md (thanks to @lucassousaf and @bgalartza for spotting them!)
+
+## [0.3.0] - 2019-07-18
+
 ### Fixed
 - Several operations where creating their log entries with the wrong keywords, which would mislead anyone reading the logs. It has now been fixed.
 
