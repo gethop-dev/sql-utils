@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.1] - 2019-07-29
+
+### Added
+- pg-enum->keyword, which is the complementary function of pg-enum->keyword.
+
 ## [0.4.0] - 2019-07-19
 
 ### Changed
@@ -32,8 +37,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.0...HEAD
-[0.4.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.3.0
+[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0
+[0.4.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0
 [0.3.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.3.0
 [0.2.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.2.0
 [0.1.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.1.0
