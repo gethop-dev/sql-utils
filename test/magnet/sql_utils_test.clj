@@ -77,6 +77,17 @@
         (is (and (instance? PGobject result)
                  (= "test-enum" (.getType result))
                  (= "test-keyword" (.getValue result))))))
+    (testing "pg-enum->keyword"
+      (let [pg-enum (doto (PGobject.)
+                      (.setType "test-enum")
+                      (.setValue "test-keyword"))
+            result (sql-utils/pg-enum->keyword pg-enum "test-enum")]
+        (is (= result :test-keyword))))
+    (testing "pg-enum->keyword (wrong enum type)"
+      (let [pg-enum (doto (PGobject.)
+                      (.setType "test-enum")
+                      (.setValue "test-keyword"))]
+        (is (thrown? java.lang.AssertionError (sql-utils/pg-enum->keyword pg-enum "other-test-enum")))))
     (testing "map->pg-jsonb! (regular map)"
       (let [result (sql-utils/map->pg-jsonb {:test-1 "test-1"
                                              :test-2 "test-2"})]

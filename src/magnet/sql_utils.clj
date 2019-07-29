@@ -64,6 +64,22 @@
     (.setType enum-type)
     (.setValue (name kw))))
 
+(s/def ::pg-enum->keyword-args (s/cat :val ::pg-object :enum-type string?))
+(s/def ::pg-enum->keyword-ret keyword?)
+(s/fdef pg-enum->keyword
+  :args ::pg-enum->keyword-args
+  :ret  ::pg-enum->keyword-ret)
+
+(defn pg-enum->keyword
+  "Convert `pg-enum` from `enum-type` enum compatible PGobject into a keyword.
+  `enum-type` is a string holding the name of the Postgresql enum type.
+  Asserts if `pg-enum` doesn't contain a value of type `enum-type`"
+  [pg-enum enum-type]
+  {:pre [(and (s/valid? ::pg-object pg-enum)
+              (string? enum-type)
+              (= (.getType pg-enum) enum-type))]}
+  (keyword (.getValue pg-enum)))
+
 (s/def ::json->pg-jsonb-args (s/cat :json string?))
 (s/def ::json->pg-jsonb-ret ::pg-object)
 (s/fdef json->pg-jsonb
