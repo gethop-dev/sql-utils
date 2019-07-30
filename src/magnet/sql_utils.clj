@@ -64,21 +64,30 @@
     (.setType enum-type)
     (.setValue (name kw))))
 
-(s/def ::pg-enum->keyword-args (s/cat :val ::pg-object :enum-type string?))
+(s/def ::pg-enum (s/or :string string? :pg-object ::pg-object))
+(s/def ::pg-enum->keyword-args (s/cat :pg-enum ::pg-enum :enum-type string?))
 (s/def ::pg-enum->keyword-ret keyword?)
 (s/fdef pg-enum->keyword
   :args ::pg-enum->keyword-args
   :ret  ::pg-enum->keyword-ret)
 
 (defn pg-enum->keyword
-  "Convert `pg-enum` from `enum-type` enum compatible PGobject into a keyword.
-  `enum-type` is a string holding the name of the Postgresql enum type.
-  Asserts if `pg-enum` doesn't contain a value of type `enum-type`"
+  "Convert `pg-enum` from `enum-type` compatible value into a keyword.
+  `enum-type` is a string holding the name of the Postgresql enum
+  type. `pg-enum` must be either a PGobject of `enum-type` type or a
+  string[1]. Otherwise, it asserts.
+
+  [1] This is because some versions of Postgresql or Postgresql
+      client driver return enums as PGobjects and other as plain
+      strings"
   [pg-enum enum-type]
-  {:pre [(and (s/valid? ::pg-object pg-enum)
-              (string? enum-type)
-              (= (.getType pg-enum) enum-type))]}
-  (keyword (.getValue pg-enum)))
+  {:pre [(and (or (and (s/valid? ::pg-object pg-enum)
+                       (= (.getType pg-enum) enum-type))
+                  (string? pg-enum))
+              (string? enum-type))]}
+  (if (string? pg-enum)
+    (keyword pg-enum)
+    (keyword (.getValue pg-enum))))
 
 (s/def ::json->pg-jsonb-args (s/cat :json string?))
 (s/def ::json->pg-jsonb-ret ::pg-object)
