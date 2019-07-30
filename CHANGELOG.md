@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.2] - 2019-07-30
+
+Changed
+- Relaxed spec & preconditions on pg-enum->keyword to also accept strings, in addition to PGobjects. Some versions of Postgresl or Postgresql client drivers return enums as plain strings, instead of wrapped in a PGObject value.
+
 ## [0.4.1] - 2019-07-29
 
 ### Added
@@ -37,10 +42,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.1...HEAD
-[0.4.1]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0
-[0.4.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0
-[0.3.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.3.0
-[0.2.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.2.0
+[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.1..0.4.2
+[0.4.1]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.1..0.4.1
+[0.4.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0..0.3.0
+[0.3.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.3.0..0.2.0
+[0.2.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.2.0..0.1.0
 [0.1.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.1.0
 
