@@ -174,9 +174,9 @@
     (try
       (let [result (jdbc/query db-spec sql-statement convert-identifiers-option)
             msec (elapsed start)]
-        (log logger :info ::sql-query-success {:msec msec
-                                               :count (count result)
-                                               :sql-statement sql-statement})
+        (log logger :trace ::sql-query-success {:msec msec
+                                                :count (count result)
+                                                :sql-statement sql-statement})
         {:success? true :return-values result})
       (catch Exception e
         (let [result {:success? false}
@@ -212,10 +212,10 @@
     (try
       (let [count (first (jdbc/insert! db-spec table cols values convert-entities-option))
             msec (elapsed start)]
-        (log logger :info ::sql-insert!-success {:msec msec
-                                                 :count count
-                                                 :cols cols
-                                                 :values values})
+        (log logger :trace ::sql-insert!-success {:msec msec
+                                                  :count count
+                                                  :cols cols
+                                                  :values values})
         {:success? true :inserted-values count})
       (catch Exception e
         (let [result {:success? false}
@@ -248,10 +248,10 @@
     (try
       (let [count (count (jdbc/insert-multi! db-spec table cols values convert-entities-option))
             msec (elapsed start)]
-        (log logger :info ::sql-insert-multi!-success {:msec msec
-                                                       :count count
-                                                       :cols cols
-                                                       :values values})
+        (log logger :trace ::sql-insert-multi!-success {:msec msec
+                                                        :count count
+                                                        :cols cols
+                                                        :values values})
         {:success? true :inserted-values count})
       (catch Exception e
         (let [result {:success? false}
@@ -288,10 +288,10 @@
     (try
       (let [count (first (jdbc/update! db-spec table set-map where-clause convert-entities-option))
             msec (elapsed start)]
-        (log logger :info ::sql-update!-success {:msec msec
-                                                 :count count
-                                                 :set-map set-map
-                                                 :where-clause where-clause})
+        (log logger :trace ::sql-update!-success {:msec msec
+                                                  :count count
+                                                  :set-map set-map
+                                                  :where-clause where-clause})
         {:success? true :processed-values count})
       (catch Exception e
         (let [result {:success? false}
@@ -323,9 +323,9 @@
     (try
       (let [count (first (jdbc/delete! db-spec table where-clause convert-identifiers-option))
             msec (elapsed start)]
-        (log logger :info ::sql-delete-success {:msec msec
-                                                :count count
-                                                :where-clause where-clause})
+        (log logger :trace ::sql-delete-success {:msec msec
+                                                 :count count
+                                                 :where-clause where-clause})
         {:success? true :deleted-values count})
       (catch Exception e
         (let [result {:success? false}
@@ -354,9 +354,9 @@
     (try
       (let [count (first (jdbc/execute! db-spec sql-statement))
             msec (elapsed start)]
-        (log logger :info ::sql-execute!-success {:msec msec
-                                                  :count count
-                                                  :sql-statement sql-statement})
+        (log logger :trace ::sql-execute!-success {:msec msec
+                                                   :count count
+                                                   :sql-statement sql-statement})
         {:success? true :processed-values count})
       (catch Exception e
         (let [result {:success? false}

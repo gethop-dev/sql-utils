@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.3] - 2019-10-21
+
+Changed
+- Successful queries now log their details using TRACE level, instead of INFO, as they are considered fine-grained informational events that are most useful to debug an application. See https://www.tutorialspoint.com/log4j/log4j_logging_levels.htm for additional details.
+
 ## [0.4.2] - 2019-07-30
 
 Changed

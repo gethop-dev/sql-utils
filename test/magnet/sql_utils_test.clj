@@ -144,3 +144,23 @@
         (is (and (instance? PGobject result)
                  (= "jsonb" (.getType result))
                  (= "null" (.getValue result))))))))
+
+(deftest sql-utils-logging
+  (let [role (first roles)
+        delete-condition ["name = ?" (:name role)]
+        update-condition delete-condition
+        query ["SELECT name, description FROM role WHERE name = ?" (:name role)]
+        logs (atom [])
+        logger (->AtomLogger logs)]
+    (testing "successful queries produce TRACE logging entries!"
+      (let [{:keys [success? inserted-values]} (sql-utils/sql-insert! db-spec logger :role
+                                                                      (keys role) (vals role))
+            [level ns-str file line event data] (first @logs)]
+        (is (and success?
+                 (= :trace level)))))
+    (testing "failing queries produce ERROR logging entries!"
+      (let [{:keys [success? inserted-values]} (sql-utils/sql-insert! db-spec logger :role
+                                                                      (keys role) (vals role))
+            [level ns-str file line event data] (second @logs)]
+        (is (and (not success?)
+                 (= :error level)))))))
