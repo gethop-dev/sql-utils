@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.4] - 2019-10-24
 Changed
 - Bumped minimum Leiningen version to 2.9.0
+- Reorganize dev profile definition. The goal is to let profiles.clj file inside the project directory override some settings on demand (e.g., inject CIDER dependencies for different versions)
 
 ## [0.4.3] - 2019-10-21
 
@@ -50,7 +52,9 @@ Changed
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.2...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.4...HEAD
+[0.4.4]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.3..0.4.4
+[0.4.3]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.2..0.4.3
 [0.4.2]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.1..0.4.2
 [0.4.1]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.1..0.4.1
 [0.4.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0..0.3.0
