@@ -22,10 +22,11 @@
   {:output-path "docs/api"
    :metadata {:doc/format :markdown}}
   :profiles
-  {:dev {:plugins [[jonase/eastwood "0.3.4"]
-                   [lein-cljfmt "0.6.2"]
-                   [lein-codox "0.10.7"]]
-         :dependencies [[com.h2database/h2 "1.4.199"]]}
+  {:dev [:project/dev :profiles/dev]
    :repl {:repl-options {:host "0.0.0.0"
-                         :port 4001}
-          :plugins [[cider/cider-nrepl "0.20.0"]]}})
+                         :port 4001}}
+   :profiles/dev {}
+   :project/dev {:plugins [[jonase/eastwood "0.3.4"]
+                           [lein-cljfmt "0.6.2"]
+                           [lein-codox "0.10.7"]]
+                 :dependencies [[com.h2database/h2 "1.4.199"]]}})
