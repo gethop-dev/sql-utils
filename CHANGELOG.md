@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+Changed
+- Bumped minimum Leiningen version to 2.9.0
+
 ## [0.4.3] - 2019-10-21
 
 Changed

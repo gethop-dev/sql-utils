@@ -3,7 +3,7 @@
   :url "https://github.com/magnetcoop/sql-utils"
   :license {:name "Mozilla Public Licence 2.0"
             :url "https://www.mozilla.org/en-US/MPL/2.0/"}
-  :min-lein-version "2.8.3"
+  :min-lein-version "2.9.0"
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [clojure.java-time "0.3.2"]
                  [cheshire "5.8.1"]
