@@ -52,13 +52,13 @@ Changed
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/compare/v0.4.4...HEAD
-[0.4.4]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.3..0.4.4
-[0.4.3]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.2..0.4.3
-[0.4.2]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.1..0.4.2
-[0.4.1]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.1..0.4.1
-[0.4.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.4.0..0.3.0
-[0.3.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.3.0..0.2.0
-[0.2.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.2.0..0.1.0
-[0.1.0]: https://github.com/magnetcoop/buddy-auth.jwt-oidc/releases/tag/v0.1.0
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.4...HEAD
+[0.4.4]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.4
+[0.4.3]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.3
+[0.4.2]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.2
+[0.4.1]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.1
+[0.4.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.0
+[0.3.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.3.0
+[0.2.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.2.0
+[0.1.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.1.0
 
