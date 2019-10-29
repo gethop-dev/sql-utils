@@ -22,6 +22,11 @@
      name VARCHAR(128) PRIMARY KEY,
      description VARCHAR(2048))")
 
+(def table-with-underscores-ddl
+  "CREATE TABLE table_with_underscores (
+     name VARCHAR(128) PRIMARY KEY,
+     description VARCHAR(2048))")
+
 (defn enable-instrumentation []
   (-> (stest/enumerate-namespace 'magnet.sql-utils) stest/instrument))
 
@@ -29,6 +34,7 @@
   :once (fn reset-db [f]
           (enable-instrumentation)
           (jdbc/execute! db-spec role-table-ddl)
+          (jdbc/execute! db-spec table-with-underscores-ddl)
           (f)
           (jdbc/execute! db-spec "DROP ALL OBJECTS")))
 
@@ -49,6 +55,12 @@
                                                                      delete-condition)]
         (is (and success?
                  (= 1 deleted-values)))))
+    (testing "sql-delete! using tables with underscores in their name"
+      (let [{:keys [success? deleted-values]} (sql-utils/sql-delete! db-spec logger
+                                                                     :table-with-underscores
+                                                                     delete-condition)]
+        (is (and success?
+                 (= 0 deleted-values)))))
     (testing "sql-insert-multi!"
       (let [cols (keys (first roles))
             values (map vals roles)

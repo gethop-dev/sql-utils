@@ -321,7 +321,7 @@
               (s/valid? ::where-clause where-clause))]}
   (let [start (System/nanoTime)]
     (try
-      (let [count (first (jdbc/delete! db-spec table where-clause convert-identifiers-option))
+      (let [count (first (jdbc/delete! db-spec table where-clause convert-entities-option))
             msec (elapsed start)]
         (log logger :trace ::sql-delete-success {:msec msec
                                                  :count count
