@@ -233,7 +233,7 @@
                                           :values ::values))
 (s/def ::sql-insert-multiple!-ret (s/keys :req-un [::success?]
                                           :opt-un [::inserted-values]))
-(s/fdef sql-insert-mulitple!
+(s/fdef sql-insert-multiple!
   :args ::sql-insert-multiple!-args
   :ret  ::sql-insert-multiple!-ret)
 
