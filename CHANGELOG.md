@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.4.5] - 2019-10-29
 ### Fixed
 - sql-delete! wasn't working with tables that had underscores in their names, if we were referring to them using keywords having hyphens.
 
@@ -54,7 +56,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.4...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.5...HEAD
+[0.4.5]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.5
 [0.4.4]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.4
 [0.4.3]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.3
 [0.4.2]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.2
