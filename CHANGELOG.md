@@ -4,20 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Fixed
+- sql-delete! wasn't working with tables that had underscores in their names, if we were referring to them using keywords having hyphens.
 
 ## [0.4.4] - 2019-10-24
-Changed
+### Changed
 - Bumped minimum Leiningen version to 2.9.0
 - Reorganize dev profile definition. The goal is to let profiles.clj file inside the project directory override some settings on demand (e.g., inject CIDER dependencies for different versions)
 
 ## [0.4.3] - 2019-10-21
 
-Changed
+### Changed
 - Successful queries now log their details using TRACE level, instead of INFO, as they are considered fine-grained informational events that are most useful to debug an application. See https://www.tutorialspoint.com/log4j/log4j_logging_levels.htm for additional details.
 
 ## [0.4.2] - 2019-07-30
 
-Changed
+### Changed
 - Relaxed spec & preconditions on pg-enum->keyword to also accept strings, in addition to PGobjects. Some versions of Postgresl or Postgresql client drivers return enums as plain strings, instead of wrapped in a PGObject value.
 
 ## [0.4.1] - 2019-07-29
