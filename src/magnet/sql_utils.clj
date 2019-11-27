@@ -47,6 +47,26 @@
   (result-set-read-column [v _ _]
     (vec (.getArray v))))
 
+(deftype JDBCArray [elements type-name]
+  jdbc/ISQLParameter
+  (set-parameter [_ stmt ix]
+    (let [as-array (into-array Object elements)
+          jdbc-array (.createArrayOf (.getConnection stmt) type-name as-array)]
+      (.setArray stmt ix jdbc-array))))
+
+(s/def ::jdbc-array #(instance? JDBCArray %))
+(s/def ::coll->jdbc-array-args (s/cat :coll coll? :type-name string?))
+(s/def ::coll->jdbc-array-ret ::jdbc-array)
+(s/fdef coll->jdbc-array
+  :args ::coll->jdbc-array-args
+  :ret  ::coll->jdbc-array-ret)
+
+(defn coll->jdbc-array
+  [coll type-name]
+  {:pre [(and (coll? coll)
+              (string? type-name))]}
+  (->JDBCArray coll type-name))
+
 (s/def ::pg-object #(instance? PGobject %))
 (s/def ::keyword->pg-enum-args (s/cat :kw keyword? :enum-type string?))
 (s/def ::keyword->pg-enum-ret ::pg-object)

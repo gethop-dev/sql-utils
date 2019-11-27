@@ -4,7 +4,9 @@
             [clojure.test :refer :all]
             [duct.logger :as logger]
             [magnet.sql-utils :as sql-utils])
-  (:import org.postgresql.util.PGobject))
+  (:import org.postgresql.util.PGobject
+           magnet.sql_utils.JDBCArray
+           java.util.UUID))
 
 (def db-spec "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1")
 
@@ -155,7 +157,14 @@
       (let [result (sql-utils/coll->pg-jsonb nil)]
         (is (and (instance? PGobject result)
                  (= "jsonb" (.getType result))
-                 (= "null" (.getValue result))))))))
+                 (= "null" (.getValue result))))))
+    (testing "coll->jdbc-array"
+      (are [coll type-name]
+           (let [result (sql-utils/coll->jdbc-array coll type-name)]
+             (instance? JDBCArray result))
+        [1 2 3 4] "integer"
+        '("a" "b" "c") "text"
+        [(UUID/randomUUID) (UUID/randomUUID)] "uuid"))))
 
 (deftest sql-utils-logging
   (let [role (first roles)
