@@ -61,7 +61,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.5...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.7...HEAD
+[0.4.6]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.6
 [0.4.5]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.5
 [0.4.4]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.4
 [0.4.3]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.3
