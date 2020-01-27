@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.4.7] - 2020-01-27
+
 ### Fixed
 - Some functions (sql-update!,sql-delete! and sql-execute!) had their return value keys different from the spec definition. As spec doesn't validate return values we didn't notice it before.
 
@@ -64,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Initial commit
 
 [UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.7...HEAD
+[0.4.7]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.7
 [0.4.6]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.6
 [0.4.5]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.5
 [0.4.4]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.4
