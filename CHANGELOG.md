@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Fixed
+- Some functions (sql-update!,sql-delete! and sql-execute!) had their return value keys different from the spec definition. As spec doesn't validate return values we didn't notice it before.
 
 ## [0.4.6] - 2019-11-27
 

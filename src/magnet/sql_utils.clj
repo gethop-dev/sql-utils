@@ -290,8 +290,9 @@
                                  :table ::table
                                  :set-map ::set-map
                                  :where-clase ::where-clause))
+(s/def ::processed-values integer?)
 (s/def ::sql-update!-ret (s/keys :req-un [::success?]
-                                 :opt-un [::inserted-values]))
+                                 :opt-un [::processed-values]))
 (s/fdef sql-update!
   :args ::sql-update!-args
   :ret  ::sql-update!-ret)
@@ -326,8 +327,9 @@
                                  :logger ::logger
                                  :table ::table
                                  :where-clause ::where-clause))
+(s/def ::deleted-values integer?)
 (s/def ::sql-delete!-ret (s/keys :req-un [::success?]
-                                 :opt-un [::inserted-values]))
+                                 :opt-un [::deleted-values]))
 (s/fdef sql-delete!
   :args ::sql-delete!-args
   :ret  ::sql-delete!-ret)
@@ -359,7 +361,7 @@
                                   :logger ::logger
                                   :sql-statement ::sql-statement))
 (s/def ::sql-execute!-ret (s/keys :req-un [::success?]
-                                  :opt-un [::inserted-values]))
+                                  :opt-un [::processed-values]))
 (s/fdef sql-execute!
   :args ::sql-execute!-args
   :ret  ::sql-execute!-ret)
