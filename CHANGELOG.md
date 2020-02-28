@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.8] - 2020-02-28
+
+### Added
+- Add method to convert PostgreSQL JSON objects to Clojure collections.
+
 ## [0.4.7] - 2020-01-27
 
 ### Fixed
