@@ -164,7 +164,13 @@
              (instance? JDBCArray result))
         [1 2 3 4] "integer"
         '("a" "b" "c") "text"
-        [(UUID/randomUUID) (UUID/randomUUID)] "uuid"))))
+        [(UUID/randomUUID) (UUID/randomUUID)] "uuid"))
+    (testing "pg-json->coll"
+      (let [pg-object (PGobject.)]
+        (.setValue pg-object "[{\"a\":[1,2,3],\"b\":[\"test-1\",\"test-2\",1]}]")
+        (.setType pg-object "json")
+        (is (= (sql-utils/pg-json->coll pg-object)
+               [{:a [1 2 3] :b ["test-1" "test-2" 1]}]))))))
 
 (deftest sql-utils-logging
   (let [role (first roles)

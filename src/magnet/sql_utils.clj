@@ -156,6 +156,19 @@
       json/generate-string
       json->pg-jsonb))
 
+(s/def ::pg-json (s/and ::pg-object #(some #{(.getType %)} ["json" "jsonb"])))
+(s/def ::pg-json->coll-args (s/cat :pg-json ::pg-json))
+(s/def ::pg-json->coll-ret coll?)
+(s/fdef pg-json->coll
+  :args ::pg-json->coll-args
+  :ret ::pg-json->coll-ret)
+
+(defn pg-json->coll
+  "Convert PostgreSQL Object `pg-object` into a Clojure collection."
+  [pg-json]
+  {:pre [(s/valid? ::pg-json pg-json)]}
+  (json/decode (.getValue pg-json) #(keyword (convert-identifiers-option-fn %))))
+
 (s/def ::instant #(jt/instant? %))
 (s/def ::sql-timestamp #(instance? java.sql.Timestamp %))
 (s/def ::instant->sql-timestamp-args (s/cat :v ::instant))
