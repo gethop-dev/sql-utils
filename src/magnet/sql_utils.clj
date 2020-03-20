@@ -42,7 +42,7 @@
   ;; convert those back into Clojure vectors to use them natively.  We
   ;; can extend `clojure.java.jdbc/IResultSetReadColumn` for any
   ;; clojure.java.jdbc/IResultSetReadColumn (see
-  ;; http://clojure.atlassian.net/browse/JDBC-46)
+  ;; http://clojure-doc.org/articles/ecosystem/java_jdbc/using_sql.html#protocol-extensions-for-transforming-values)
   PgArray
   (result-set-read-column [v _ _]
     (vec (.getArray v))))
