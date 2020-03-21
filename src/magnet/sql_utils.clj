@@ -216,11 +216,14 @@
 (s/def ::sql-statement :clojure.java.jdbc.spec/sql-params)
 (s/def ::success? boolean?)
 (s/def ::return-values coll?)
+(s/def ::error-type keyword?)
+(s/def ::error-details (s/keys :req-un [::error-type]))
 (s/def ::sql-query-args (s/cat :db-spec ::db-spec
                                :logger ::logger
                                :sql-statement ::sql-statement))
 (s/def ::sql-query-ret (s/keys :req-un [::success?]
-                               :opt-un [::return-values]))
+                               :opt-un [::return-values
+                                        ::error-details]))
 (s/fdef sql-query
   :args ::sql-query-args
   :ret  ::sql-query-ret)
@@ -256,7 +259,8 @@
                                  :values ::values))
 (s/def ::inserted-values integer?)
 (s/def ::sql-insert!-ret (s/keys :req-un [::success?]
-                                 :opt-un [::inserted-values]))
+                                 :opt-un [::inserted-values
+                                          ::error-details]))
 (s/fdef sql-insert!
   :args ::sql-insert!-args
   :ret  ::sql-insert!-ret)
@@ -291,7 +295,8 @@
                                           :cols ::cols
                                           :values ::values))
 (s/def ::sql-insert-multiple!-ret (s/keys :req-un [::success?]
-                                          :opt-un [::inserted-values]))
+                                          :opt-un [::inserted-values
+                                                   ::error-details]))
 (s/fdef sql-insert-multiple!
   :args ::sql-insert-multiple!-args
   :ret  ::sql-insert-multiple!-ret)
@@ -330,7 +335,8 @@
                                  :where-clase ::where-clause))
 (s/def ::processed-values integer?)
 (s/def ::sql-update!-ret (s/keys :req-un [::success?]
-                                 :opt-un [::processed-values]))
+                                 :opt-un [::processed-values
+                                          ::error-details]))
 (s/fdef sql-update!
   :args ::sql-update!-args
   :ret  ::sql-update!-ret)
@@ -366,7 +372,8 @@
                                  :where-clause ::where-clause))
 (s/def ::deleted-values integer?)
 (s/def ::sql-delete!-ret (s/keys :req-un [::success?]
-                                 :opt-un [::deleted-values]))
+                                 :opt-un [::deleted-values
+                                          ::error-details]))
 (s/fdef sql-delete!
   :args ::sql-delete!-args
   :ret  ::sql-delete!-ret)
@@ -397,7 +404,8 @@
                                   :logger ::logger
                                   :sql-statement ::sql-statement))
 (s/def ::sql-execute!-ret (s/keys :req-un [::success?]
-                                  :opt-un [::processed-values]))
+                                  :opt-un [::processed-values
+                                           ::error-details]))
 (s/fdef sql-execute!
   :args ::sql-execute!-args
   :ret  ::sql-execute!-ret)
