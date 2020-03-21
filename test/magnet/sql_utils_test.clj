@@ -22,12 +22,12 @@
 (def role-table-ddl
   "CREATE TABLE role (
      name VARCHAR(128) PRIMARY KEY,
-     description VARCHAR(2048))")
+     description VARCHAR(2048) NOT NULL)")
 
 (def table-with-underscores-ddl
   "CREATE TABLE table_with_underscores (
      name VARCHAR(128) PRIMARY KEY,
-     description VARCHAR(2048))")
+     description VARCHAR(2048) NOT NULL)")
 
 (defn enable-instrumentation []
   (-> (stest/enumerate-namespace 'magnet.sql-utils) stest/instrument))
@@ -52,6 +52,27 @@
                                                                       (keys role) (vals role))]
         (is (and success?
                  (= 1 inserted-values)))))
+    (testing "sql-insert! duplicated primary key/unique column"
+      (let [{:keys [success? error-details]} (sql-utils/sql-insert! db-spec logger :role
+                                                                    (keys role) (vals role))]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-insert! no primary key"
+      (let [{:keys [success? error-details]} (sql-utils/sql-insert! db-spec logger :role
+                                                                    (keys (dissoc role :name))
+                                                                    (vals (dissoc role :name)))]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-insert! NULL value for non-NULL column"
+      (let [role {:name "new-name", :description nil}
+            {:keys [success? error-details]} (sql-utils/sql-insert! db-spec logger :role
+                                                                    (keys role)
+                                                                    (vals role))]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
     (testing "sql-delete!"
       (let [{:keys [success? deleted-values]} (sql-utils/sql-delete! db-spec logger :role
                                                                      delete-condition)]
@@ -63,6 +84,10 @@
                                                                      delete-condition)]
         (is (and success?
                  (= 0 deleted-values)))))
+
+    ;; Empty role table to prepare for multiple insertion tests.
+    (jdbc/execute! db-spec "TRUNCATE TABLE role")
+
     (testing "sql-insert-multi!"
       (let [cols (keys (first roles))
             values (map vals roles)
@@ -70,6 +95,31 @@
                                                                             cols values)]
         (is (and success?
                  (= (count roles) inserted-values)))))
+    (testing "sql-insert-multi! duplicated primary key/unique column"
+      (let [cols (keys (first roles))
+            values (map vals (conj roles (first roles)))
+            {:keys [success? error-details]} (sql-utils/sql-insert-multi! db-spec logger :role
+                                                                          cols values)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-insert-multi! no primary key"
+      (let [cols (keys (dissoc (first roles) :name))
+            values (map vals (map #(dissoc % :name) roles))
+            {:keys [success? error-details]} (sql-utils/sql-insert-multi! db-spec logger :role
+                                                                          cols values)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-insert-multi! NULL value for non-NULL column"
+      (let [cols (keys (first roles))
+            values (map vals (map #(assoc % :description nil) roles))
+            role {:name "new-name", :description nil}
+            {:keys [success? error-details]} (sql-utils/sql-insert-multi! db-spec logger :role
+                                                                          cols values)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
     (testing "sql-query"
       (let [{:keys [success? return-values]} (sql-utils/sql-query db-spec logger query)]
         (is (and success?
@@ -81,11 +131,53 @@
                                                                        update-condition)]
         (is (and success?
                  (= 1 processed-values)))))
+    (testing "sql-update! duplicated primary/unique column"
+      (let [set-map {:name "customer"}
+            {:keys [success? error-details]} (sql-utils/sql-update! db-spec logger :role
+                                                                    set-map
+                                                                    update-condition)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-update! no primary key"
+      (let [set-map {:name nil, :description "An updated description"}
+            {:keys [success? error-details]} (sql-utils/sql-update! db-spec logger :role
+                                                                    set-map
+                                                                    update-condition)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-update! NULL value for non-NULL column"
+      (let [set-map {:description nil}
+            {:keys [success? error-details]} (sql-utils/sql-update! db-spec logger :role
+                                                                    set-map
+                                                                    update-condition)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
     (testing "sql-execute!"
       (let [sql-statement ["DELETE FROM role"]
             {:keys [success? processed-values]} (sql-utils/sql-execute! db-spec logger sql-statement)]
         (is (and success?
                  (= (count roles) processed-values)))))
+    (testing "sql-execute! duplicated primary key/unique column"
+      (let [sql-statement ["INSERT INTO role (name, description) VALUES ('admin', 'Admin desc'),('admin', 'Other admin desc')"]
+            {:keys [success? error-details]} (sql-utils/sql-execute! db-spec logger sql-statement)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-execute! no primary key"
+      (let [sql-statement ["INSERT INTO role (description) VALUES ('Customer desc')"]
+            {:keys [success? error-details]} (sql-utils/sql-execute! db-spec logger sql-statement)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
+    (testing "sql-execute! NULL value for non-NULL column"
+      (let [sql-statement ["INSERT INTO role (name) VALUES ('guest')"]
+            {:keys [success? error-details]} (sql-utils/sql-execute! db-spec logger sql-statement)]
+        (is (and (not success?)
+                 (= (:error-type error-details)
+                    :integrity-constraint-violation)))))
     (testing "keyword->pg-enum"
       (let [result (sql-utils/keyword->pg-enum :test-keyword "test-enum")]
         (is (and (instance? PGobject result)
@@ -159,9 +251,8 @@
                  (= "jsonb" (.getType result))
                  (= "null" (.getValue result))))))
     (testing "coll->jdbc-array"
-      (are [coll type-name]
-           (let [result (sql-utils/coll->jdbc-array coll type-name)]
-             (instance? JDBCArray result))
+      (are [coll type-name] (let [result (sql-utils/coll->jdbc-array coll type-name)]
+                              (instance? JDBCArray result))
         [1 2 3 4] "integer"
         '("a" "b" "c") "text"
         [(UUID/randomUUID) (UUID/randomUUID)] "uuid"))

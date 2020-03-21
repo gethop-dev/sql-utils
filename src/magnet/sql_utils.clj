@@ -183,6 +183,34 @@
   {:pre [(s/valid? ::instant instant)]}
   (jt-pre-j8/sql-timestamp instant "UTC"))
 
+(defn- explain-sql-error [e]
+  (if-not (instance? java.sql.SQLException e)
+    {:success? false
+     :error-details {:error-type :unkown-sql-error}}
+    (let [sql-state (.getSQLState e)]
+      (cond
+        ;; Various types of contraint integrity errors (missing
+        ;; primary key, NULL value for a non-NULL, columns, UNIQUE
+        ;; value constratint, missing FOREIGN KEY, etc.
+        ;;
+        ;; From http://www.h2database.com/javadoc/org/h2/api/ErrorCode.html
+        ;;   H2 #{23502 23503 23505 23506 23507 23513 23514}
+        ;; From https://www.postgresql.org/docs/12/errcodes-appendix.html
+        ;;   Postgresql #{23000 23001 23502 23503 23505 23514 23P01}
+        ;; From https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-error-sqlstates.html
+        ;;   MySQL #{1022 1048 1052 1062 1169 1216 1217 1451 1452 1557 1586 1761 1762 1859}
+        ;;      All of them mapped to SQLState 23000
+        ;; From https://mariadb.com/kb/en/mariadb-error-codes/
+        ;;   MariaDB #{1022 1048 1052 1062 1169 1216 1217 1451 1452 1557 1586 1761 1762 1859 4025}
+        ;;      All of them mapped to SQLState 23000
+        (re-matches #"^23[0-9P]{3}" sql-state)
+        {:success? false
+         :error-details {:error-type :integrity-constraint-violation}}
+
+        :else
+        {:success? false
+         :error-details {:error-type :other-sql-error}}))))
+
 (s/def ::db-spec :clojure.java.jdbc.spec/db-spec)
 (s/def ::logger #(satisfies? duct.logger/Logger %))
 (s/def ::sql-statement :clojure.java.jdbc.spec/sql-params)
@@ -212,12 +240,11 @@
                                                 :sql-statement sql-statement})
         {:success? true :return-values result})
       (catch Exception e
-        (let [result {:success? false}
-              msec (elapsed start)]
+        (let [msec (elapsed start)]
           (log logger :error ::sql-query-error {:msec msec
                                                 :ex-message (.getMessage e)
                                                 :sql-statement sql-statement})
-          result)))))
+          (explain-sql-error e))))))
 
 (s/def ::table :clojure.java.jdbc.spec/identifier)
 (s/def ::cols coll?)
@@ -251,13 +278,12 @@
                                                   :values values})
         {:success? true :inserted-values count})
       (catch Exception e
-        (let [result {:success? false}
-              msec (elapsed start)]
+        (let [msec (elapsed start)]
           (log logger :error ::sql-insert!-error {:msec msec
                                                   :ex-message (.getMessage e)
                                                   :cols cols
                                                   :values values})
-          result)))))
+          (explain-sql-error e))))))
 
 (s/def ::sql-insert-multiple!-args (s/cat :db-spec ::db-spec
                                           :logger ::logger
@@ -287,13 +313,12 @@
                                                         :values values})
         {:success? true :inserted-values count})
       (catch Exception e
-        (let [result {:success? false}
-              msec (elapsed start)]
+        (let [msec (elapsed start)]
           (log logger :error ::sql-insert-multi!-error {:msec msec
                                                         :ex-message (.getMessage e)
                                                         :cols cols
                                                         :values values})
-          result)))))
+          (explain-sql-error e))))))
 
 (s/def ::set-map (s/map-of :clojure.java.jdbc.spec/identifier
                            :clojure.java.jdbc.spec/sql-value))
@@ -328,13 +353,12 @@
                                                   :where-clause where-clause})
         {:success? true :processed-values count})
       (catch Exception e
-        (let [result {:success? false}
-              msec (elapsed start)]
+        (let [msec (elapsed start)]
           (log logger :error ::sql-update!-error {:msec msec
                                                   :ex-message (.getMessage e)
                                                   :set-map set-map
                                                   :where-clause where-clause})
-          result)))))
+          (explain-sql-error e))))))
 
 (s/def ::sql-delete!-args (s/cat :db-spec ::db-spec
                                  :logger ::logger
@@ -363,12 +387,11 @@
                                                  :where-clause where-clause})
         {:success? true :deleted-values count})
       (catch Exception e
-        (let [result {:success? false}
-              msec (elapsed start)]
+        (let [msec (elapsed start)]
           (log logger :error ::sql-delete-error {:msec msec
                                                  :ex-message (.getMessage e)
                                                  :where-clause where-clause})
-          result)))))
+          (explain-sql-error e))))))
 
 (s/def ::sql-execute!-args (s/cat :db-spec ::db-spec
                                   :logger ::logger
@@ -394,9 +417,8 @@
                                                    :sql-statement sql-statement})
         {:success? true :processed-values count})
       (catch Exception e
-        (let [result {:success? false}
-              msec (elapsed start)]
+        (let [msec (elapsed start)]
           (log logger :error ::sql-execute!-error {:msec msec
                                                    :ex-message (.getMessage e)
                                                    :sql-statement sql-statement})
-          result)))))
+          (explain-sql-error e))))))

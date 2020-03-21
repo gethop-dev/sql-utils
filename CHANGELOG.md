@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Return additional error details when `:success?` is false. The main methods of the library return a `:success?` key specifying if the operation succeeded or not. But they don't give any details about why the operation was unsuccessful. That information is only sent to the logs. This additional information is especially useful when a query violates an integrity constratint (duplicate primary key, duplicate unique column, NULL value for a non-NULL column, etc). Returning this information to the caller allows it to handle the situation withou easier, without needing additional queries to find out the issue.
+
 ## [0.4.8] - 2020-02-28
 
 ### Added
