@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.4.10] - 2020-03-26
+
 ### Added
 - Add `sql-update-or-insert!` to update an existing row or inserting a new one if there wasn't one with the specified conditions on the where clause. If the update modifies more than one row, it rolls back all the changes and returns failure. Implementation inspired by http://clojure-doc.org/articles/ecosystem/java_jdbc/using_sql.html#updating-or-inserting-rows-conditionally
 
@@ -79,7 +81,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.9...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.10...HEAD
+[0.4.10]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.10
 [0.4.9]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.9
 [0.4.8]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.8
 [0.4.7]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.7
