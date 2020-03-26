@@ -155,6 +155,44 @@
         (is (and (not success?)
                  (= (:error-type error-details)
                     :integrity-constraint-violation)))))
+
+    ;; Empty role table to prepare for update-or-insert! tests.
+    (jdbc/execute! db-spec "TRUNCATE TABLE role")
+
+    (testing "sql-update-or-insert! inserts non-existing row"
+      (let [set-map {:name (:name role), :description (:description role)}
+            update-condition ["name = ?" (:name role)]
+            {:keys [success? inserted-values]} (sql-utils/sql-update-or-insert! db-spec logger :role
+                                                                                set-map
+                                                                                update-condition)]
+        (is (and success?
+                 (= 1 inserted-values)))))
+    (testing "sql-update-or-insert! updates existing row"
+      (let [set-map {:name (:name role), :description (:description role)}
+            update-condition ["name = ?" (:name role)]
+            {:keys [success? processed-values]} (sql-utils/sql-update-or-insert! db-spec logger :role
+                                                                                 set-map
+                                                                                 update-condition)]
+        (is (and success?
+                 (= 1 processed-values)))))
+    (testing "sql-update-or-insert! returns failure and doesn't update table if it touches more than one row"
+      (let [test-roles [{:name "role-1" :description "description-role-1"}
+                        {:name "role-2" :description "description-role-2"}]
+            _ (jdbc/insert-multi! db-spec :role test-roles)
+            set-map {:description "updated description"}
+            update-condition ["name like ?" "role-%"]
+            {:keys [success?]} (sql-utils/sql-update-or-insert! db-spec logger :role
+                                                                set-map
+                                                                update-condition)
+            result (jdbc/query db-spec ["SELECT name, description FROM role"])
+            expected-roles (concat [(first roles)] test-roles)]
+        (is (and (not success?)
+                 (= result expected-roles)))))
+
+    ;; Populate role table to prepare for execute! tests.
+    (jdbc/execute! db-spec "TRUNCATE TABLE role")
+    (jdbc/insert-multi! db-spec :role roles)
+
     (testing "sql-execute!"
       (let [sql-statement ["DELETE FROM role"]
             {:keys [success? processed-values]} (sql-utils/sql-execute! db-spec logger sql-statement)]

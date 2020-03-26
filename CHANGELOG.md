@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- Add `sql-update-or-insert!` to update an existing row or inserting a new one if there wasn't one with the specified conditions on the where clause. If the update modifies more than one row, it rolls back all the changes and returns failure. Implementation inspired by http://clojure-doc.org/articles/ecosystem/java_jdbc/using_sql.html#updating-or-inserting-rows-conditionally
+
+## [0.4.9] - 2020-03-21
+
 ### Changed
 - Return additional error details when `:success?` is false. The main methods of the library return a `:success?` key specifying if the operation succeeded or not. But they don't give any details about why the operation was unsuccessful. That information is only sent to the logs. This additional information is especially useful when a query violates an integrity constratint (duplicate primary key, duplicate unique column, NULL value for a non-NULL column, etc). Returning this information to the caller allows it to handle the situation withou easier, without needing additional queries to find out the issue.
 
@@ -74,7 +79,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.7...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.9...HEAD
+[0.4.9]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.9
+[0.4.8]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.8
 [0.4.7]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.7
 [0.4.6]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.6
 [0.4.5]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.5

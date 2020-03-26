@@ -366,6 +366,66 @@
                                                   :where-clause where-clause})
           (explain-sql-error e))))))
 
+(s/def ::sql-update-or-insert!-args (s/cat :db-spec ::db-spec
+                                           :logger ::logger
+                                           :table ::table
+                                           :set-map ::set-map
+                                           :where-clase ::where-clause))
+(s/def ::sql-update-or-insert!-ret (s/keys :req-un [::success?]
+                                           :opt-un [::processed-values
+                                                    ::error-details]))
+(s/fdef sql-update-or-insert!
+  :args ::sql-update-or-insert!-args
+  :ret  ::sql-update-or-insert!-ret)
+
+(defn sql-update-or-insert!
+  "FIXME: document this function"
+  [db-spec logger table set-map where-clause]
+  {:pre [(and (s/valid? ::db-spec db-spec)
+              (s/valid? ::logger logger)
+              (s/valid? ::table table)
+              (s/valid? ::set-map set-map)
+              (s/valid? ::where-clause where-clause))]}
+  (let [start (System/nanoTime)]
+    (try
+      (jdbc/with-db-transaction [t-conn db-spec]
+        (let [count (first (jdbc/update! t-conn table set-map where-clause convert-entities-option))
+              msec (elapsed start)]
+          (cond
+            ;; Nothing update, so insert a new row.
+            (zero? count)
+            (let [cols (keys set-map)
+                  values (vals set-map)
+                  start (System/nanoTime)
+                  count (first (jdbc/insert! t-conn table cols values convert-entities-option))
+                  msec (elapsed start)]
+              (log logger :trace ::sql-insert!-success {:msec msec
+                                                        :count count
+                                                        :cols cols
+                                                        :values values})
+              {:success? true :inserted-values count})
+
+            ;; A single row updated, we are good to go!
+            (= 1 count)
+            (do
+              (log logger :trace ::sql-update!-success {:msec msec
+                                                        :count count
+                                                        :set-map set-map
+                                                        :where-clause where-clause})
+              {:success? true :processed-values count})
+
+            ;; Whoops, we updated too many rows. Roll the update back. Throwig an exception
+            ;; will roll back the update, leaving the database untouched.
+            :else
+            (throw (Exception. "sql-update-or-insert! tried to update more than one row!")))))
+      (catch Exception e
+        (let [msec (elapsed start)]
+          (log logger :error ::sql-update-or-insert!-error {:msec msec
+                                                            :ex-message (.getMessage e)
+                                                            :set-map set-map
+                                                            :where-clause where-clause})
+          (explain-sql-error e))))))
+
 (s/def ::sql-delete!-args (s/cat :db-spec ::db-spec
                                  :logger ::logger
                                  :table ::table
