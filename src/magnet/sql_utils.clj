@@ -403,7 +403,7 @@
                                                         :count count
                                                         :cols cols
                                                         :values values})
-              {:success? true :inserted-values count})
+              {:success? true :processed-values count})
 
             ;; A single row updated, we are good to go!
             (= 1 count)

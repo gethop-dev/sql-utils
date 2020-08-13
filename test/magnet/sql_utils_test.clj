@@ -162,11 +162,11 @@
     (testing "sql-update-or-insert! inserts non-existing row"
       (let [set-map {:name (:name role), :description (:description role)}
             update-condition ["name = ?" (:name role)]
-            {:keys [success? inserted-values]} (sql-utils/sql-update-or-insert! db-spec logger :role
-                                                                                set-map
-                                                                                update-condition)]
+            {:keys [success? processed-values]} (sql-utils/sql-update-or-insert! db-spec logger :role
+                                                                                 set-map
+                                                                                 update-condition)]
         (is (and success?
-                 (= 1 inserted-values)))))
+                 (= 1 processed-values)))))
     (testing "sql-update-or-insert! updates existing row"
       (let [set-map {:name (:name role), :description (:description role)}
             update-condition ["name = ?" (:name role)]

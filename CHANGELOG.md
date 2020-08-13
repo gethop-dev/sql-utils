@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Fixed
+- sql-update-or-insert! was wrongly returning `:processed-values` key when inserting the row (instead of updating it). It was returning `:inserted-values` instead. Now it always returns `:processed-values` or `:error-details`, as the spec documents.
 
 ## [0.4.10] - 2020-03-26
 
