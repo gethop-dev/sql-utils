@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.4.11] - 2020-08-13
 ### Fixed
 - sql-update-or-insert! was wrongly returning `:processed-values` key when inserting the row (instead of updating it). It was returning `:inserted-values` instead. Now it always returns `:processed-values` or `:error-details`, as the spec documents.
 
@@ -83,7 +85,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.10...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.11...HEAD
+[0.4.11]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.11
 [0.4.10]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.10
 [0.4.9]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.9
 [0.4.8]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.8
