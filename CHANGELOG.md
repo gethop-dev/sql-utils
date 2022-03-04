@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Fixed
+- Consider the case when `(.getSQLstate e)` returns `nil` in `explain-sql-error`. That can happen when using a closed database connection. This was only reproducible during development but when it happens, `sql-utils` would throw an exception.
 
 ## [0.4.11] - 2020-08-13
 ### Fixed

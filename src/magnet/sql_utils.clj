@@ -187,7 +187,7 @@
   (if-not (instance? java.sql.SQLException e)
     {:success? false
      :error-details {:error-type :unkown-sql-error}}
-    (let [sql-state (.getSQLState e)]
+    (if-let [sql-state (.getSQLState e)]
       (cond
         ;; Various types of contraint integrity errors (missing
         ;; primary key, NULL value for a non-NULL, columns, UNIQUE
@@ -209,7 +209,9 @@
 
         :else
         {:success? false
-         :error-details {:error-type :other-sql-error}}))))
+         :error-details {:error-type :other-sql-error}})
+      {:success? false
+       :error-details {:error-type :unkown-sql-error}})))
 
 (s/def ::db-spec :clojure.java.jdbc.spec/db-spec)
 (s/def ::logger #(satisfies? duct.logger/Logger %))
