@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.4.12] - 2022-03-17
 ### Fixed
 - Consider the case when `(.getSQLstate e)` returns `nil` in `explain-sql-error`. That can happen when using a closed database connection. This was only reproducible during development but when it happens, `sql-utils` would throw an exception.
 
@@ -87,7 +89,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.11...HEAD
+[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.12...HEAD
+[0.4.12]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.12
 [0.4.11]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.11
 [0.4.10]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.10
 [0.4.9]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.9
