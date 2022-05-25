@@ -12,7 +12,7 @@
 
 (defrecord AtomLogger [logs]
   logger/Logger
-  (-log [logger level ns-str file line id event data]
+  (-log [_ level ns-str file line _ event data]
     (swap! logs conj [level ns-str file line event data])))
 
 (def roles [{:name "admin" :description "Application admin"}
@@ -114,7 +114,6 @@
     (testing "sql-insert-multi! NULL value for non-NULL column"
       (let [cols (keys (first roles))
             values (map vals (map #(assoc % :description nil) roles))
-            role {:name "new-name", :description nil}
             {:keys [success? error-details]} (sql-utils/sql-insert-multi! db-spec logger :role
                                                                           cols values)]
         (is (and (not success?)
@@ -303,20 +302,17 @@
 
 (deftest sql-utils-logging
   (let [role (first roles)
-        delete-condition ["name = ?" (:name role)]
-        update-condition delete-condition
-        query ["SELECT name, description FROM role WHERE name = ?" (:name role)]
         logs (atom [])
         logger (->AtomLogger logs)]
     (testing "successful queries produce TRACE logging entries!"
-      (let [{:keys [success? inserted-values]} (sql-utils/sql-insert! db-spec logger :role
-                                                                      (keys role) (vals role))
-            [level ns-str file line event data] (first @logs)]
+      (let [{:keys [success?]} (sql-utils/sql-insert! db-spec logger :role
+                                                      (keys role) (vals role))
+            [level _ _ _ _ _] (first @logs)]
         (is (and success?
                  (= :trace level)))))
     (testing "failing queries produce ERROR logging entries!"
-      (let [{:keys [success? inserted-values]} (sql-utils/sql-insert! db-spec logger :role
-                                                                      (keys role) (vals role))
-            [level ns-str file line event data] (second @logs)]
+      (let [{:keys [success?]} (sql-utils/sql-insert! db-spec logger :role
+                                                      (keys role) (vals role))
+            [level _ _ _ _ _] (second @logs)]
         (is (and (not success?)
                  (= :error level)))))))
