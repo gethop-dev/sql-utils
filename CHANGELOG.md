@@ -65,7 +65,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.4.0] - 2019-07-19
 
 ### Changed
-- Moved Clojars artifact to magnet/sql-utils, to use the same naming pattern as other Manget artifacts.
+- Moved Clojars artifact to dev.gethop/sql-utils, to use the same naming pattern as other HOP artifacts.
 
 ## [0.3.1] - 2019-07-19
 
@@ -89,20 +89,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [0.1.0] - 2019-07-16
 - Initial commit
 
-[UNRELEASED]: https://github.com/magnetcoop/sql-utils/compare/v0.4.12...HEAD
-[0.4.12]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.12
-[0.4.11]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.11
-[0.4.10]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.10
-[0.4.9]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.9
-[0.4.8]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.8
-[0.4.7]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.7
-[0.4.6]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.6
-[0.4.5]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.5
-[0.4.4]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.4
-[0.4.3]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.3
-[0.4.2]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.2
-[0.4.1]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.1
-[0.4.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.4.0
-[0.3.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.3.0
-[0.2.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.2.0
-[0.1.0]: https://github.com/magnetcoop/sql-utils/releases/tag/v0.1.0
+[UNRELEASED]: https://github.com/gethop-dev/sql-utils/compare/v0.4.12...HEAD
+[0.4.12]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.12
+[0.4.11]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.11
+[0.4.10]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.10
+[0.4.9]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.9
+[0.4.8]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.8
+[0.4.7]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.7
+[0.4.6]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.6
+[0.4.5]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.5
+[0.4.4]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.4
+[0.4.3]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.3
+[0.4.2]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.2
+[0.4.1]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.1
+[0.4.0]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.4.0
+[0.3.0]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.3.0
+[0.2.0]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.2.0
+[0.1.0]: https://github.com/gethop-dev/sql-utils/releases/tag/v0.1.0

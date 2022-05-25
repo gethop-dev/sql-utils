@@ -1,6 +1,6 @@
-(defproject magnet/sql-utils "0.4.13-SNAPSHOT"
+(defproject dev.gethop/sql-utils "0.4.13-SNAPSHOT"
   :description "A library designed as a thin convenience wapper over clojure.java.jdbc"
-  :url "https://github.com/magnetcoop/sql-utils"
+  :url "https://github.com/gethop-dev/sql-utils"
   :license {:name "Mozilla Public Licence 2.0"
             :url "https://www.mozilla.org/en-US/MPL/2.0/"}
   :min-lein-version "2.9.0"

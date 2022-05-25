@@ -1,4 +1,4 @@
-(ns magnet.sql-utils
+(ns dev.gethop.sql-utils
   (:require [cheshire.core :as json]
             [clojure.java.jdbc :as jdbc]
             [clojure.java.jdbc.spec]

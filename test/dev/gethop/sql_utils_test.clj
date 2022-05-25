@@ -1,12 +1,12 @@
-(ns magnet.sql-utils-test
+(ns dev.gethop.sql-utils-test
   (:require [clojure.java.jdbc :as jdbc]
             [clojure.spec.test.alpha :as stest]
             [clojure.test :refer :all]
-            [duct.logger :as logger]
-            [magnet.sql-utils :as sql-utils])
-  (:import org.postgresql.util.PGobject
-           magnet.sql_utils.JDBCArray
-           java.util.UUID))
+            [dev.gethop.sql-utils :as sql-utils]
+            [duct.logger :as logger])
+  (:import dev.gethop.sql_utils.JDBCArray
+           java.util.UUID
+           org.postgresql.util.PGobject))
 
 (def db-spec "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1")
 
@@ -30,7 +30,7 @@
      description VARCHAR(2048) NOT NULL)")
 
 (defn enable-instrumentation []
-  (-> (stest/enumerate-namespace 'magnet.sql-utils) stest/instrument))
+  (-> (stest/enumerate-namespace 'dev.gethop.sql-utils) stest/instrument))
 
 (use-fixtures
   :once (fn reset-db [f]
