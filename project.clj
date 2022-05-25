@@ -3,7 +3,7 @@
   :url "https://github.com/gethop-dev/sql-utils"
   :license {:name "Mozilla Public Licence 2.0"
             :url "https://www.mozilla.org/en-US/MPL/2.0/"}
-  :min-lein-version "2.9.0"
+  :min-lein-version "2.9.8"
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [clojure.java-time "0.3.2"]
                  [cheshire "5.10.0"]
@@ -26,7 +26,7 @@
    :repl {:repl-options {:host "0.0.0.0"
                          :port 4001}}
    :profiles/dev {}
-   :project/dev {:plugins [[jonase/eastwood "0.3.4"]
-                           [lein-cljfmt "0.6.2"]
-                           [lein-codox "0.10.7"]]
-                 :dependencies [[com.h2database/h2 "1.4.199"]]}})
+   :project/dev {:plugins [[jonase/eastwood "1.2.3"]
+                           [lein-cljfmt "0.8.0"]
+                           [lein-codox "0.10.8"]]
+                 :dependencies [[com.h2database/h2 "2.1.212"]]}})
