@@ -219,8 +219,8 @@
     (testing "keyword->pg-enum"
       (let [result (sql-utils/keyword->pg-enum :test-keyword "test-enum")]
         (is (and (instance? PGobject result)
-                 (= "test-enum" (.getType result))
-                 (= "test-keyword" (.getValue result))))))
+                 (= "test-enum" (.getType ^PGobject result))
+                 (= "test-keyword" (.getValue ^PGobject result))))))
     (testing "pg-enum->keyword (PGobject)"
       (let [pg-enum (doto (PGobject.)
                       (.setType "test-enum")
@@ -244,50 +244,50 @@
       (let [result (sql-utils/map->pg-jsonb {:test-1 "test-1"
                                              :test-2 "test-2"})]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
+                 (= "jsonb" (.getType ^PGobject result))
                  (= "{\"test-1\":\"test-1\",\"test-2\":\"test-2\"}"
-                    (.getValue result))))))
+                    (.getValue ^PGobject result))))))
     (testing "map->pg-jsonb! (empty map)"
       (let [result (sql-utils/map->pg-jsonb {})]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "{}" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "{}" (.getValue ^PGobject result))))))
     (testing "map->pg-jsonb! (nil)"
       (let [result (sql-utils/map->pg-jsonb nil)]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "null" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "null" (.getValue ^PGobject result))))))
     (testing "coll->pg-jsonb! (map)"
       (let [result (sql-utils/coll->pg-jsonb {:test-keyword "test-value"})]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "{\"test-keyword\":\"test-value\"}" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "{\"test-keyword\":\"test-value\"}" (.getValue ^PGobject result))))))
     (testing "coll->pg-jsonb! (vector)"
       (let [result (sql-utils/coll->pg-jsonb ["test-1" "test-2" :a])]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "[\"test-1\",\"test-2\",\"a\"]" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "[\"test-1\",\"test-2\",\"a\"]" (.getValue ^PGobject result))))))
     (testing "coll->pg-jsonb! (list)"
       (let [result (sql-utils/coll->pg-jsonb '("test-1" "test-2" :a))]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "[\"test-1\",\"test-2\",\"a\"]" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "[\"test-1\",\"test-2\",\"a\"]" (.getValue ^PGobject result))))))
     (testing "coll->pg-jsonb! (set)"
       (let [result (sql-utils/coll->pg-jsonb #{"test-1" "test-2" :a})]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "[\"test-1\",\"test-2\",\"a\"]" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "[\"test-1\",\"test-2\",\"a\"]" (.getValue ^PGobject result))))))
     (testing "coll->pg-jsonb! (mixed and nested)"
       (let [result (sql-utils/coll->pg-jsonb {:a [1 2 3] :b #{"test-1" "test-2" :a}})]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
+                 (= "jsonb" (.getType ^PGobject result))
                  (= "{\"a\":[1,2,3],\"b\":[\"test-1\",\"test-2\",\"a\"]}"
-                    (.getValue result))))))
+                    (.getValue ^PGobject result))))))
     (testing "coll->pg-jsonb! (nil)"
       (let [result (sql-utils/coll->pg-jsonb nil)]
         (is (and (instance? PGobject result)
-                 (= "jsonb" (.getType result))
-                 (= "null" (.getValue result))))))
+                 (= "jsonb" (.getType ^PGobject result))
+                 (= "null" (.getValue ^PGobject result))))))
     (testing "coll->jdbc-array"
       (are [coll type-name] (let [result (sql-utils/coll->jdbc-array coll type-name)]
                               (instance? JDBCArray result))

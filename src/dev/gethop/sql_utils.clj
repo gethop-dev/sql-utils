@@ -7,7 +7,8 @@
             [duct.logger :refer [log]]
             [java-time :as jt]
             [java-time.pre-java8 :as jt-pre-j8])
-  (:import org.postgresql.jdbc.PgArray
+  (:import [java.sql PreparedStatement SQLException]
+           org.postgresql.jdbc.PgArray
            org.postgresql.util.PGobject))
 
 (defn- convert-identifiers-option-fn
@@ -51,8 +52,8 @@
   jdbc/ISQLParameter
   (set-parameter [_ stmt ix]
     (let [as-array (into-array Object elements)
-          jdbc-array (.createArrayOf (.getConnection stmt) type-name as-array)]
-      (.setArray stmt ix jdbc-array))))
+          jdbc-array (.createArrayOf (.getConnection ^PreparedStatement stmt) type-name as-array)]
+      (.setArray ^PreparedStatement stmt ix jdbc-array))))
 
 (s/def ::jdbc-array #(instance? JDBCArray %))
 (s/def ::coll->jdbc-array-args (s/cat :coll coll? :type-name string?))
@@ -100,7 +101,7 @@
   [1] This is because some versions of Postgresql or Postgresql
       client driver return enums as PGobjects and other as plain
       strings"
-  [pg-enum enum-type]
+  [^PGobject pg-enum enum-type]
   {:pre [(and (or (and (s/valid? ::pg-object pg-enum)
                        (= (.getType pg-enum) enum-type))
                   (string? pg-enum))
@@ -156,7 +157,7 @@
       json/generate-string
       json->pg-jsonb))
 
-(s/def ::pg-json (s/and ::pg-object #(some #{(.getType %)} ["json" "jsonb"])))
+(s/def ::pg-json (s/and ::pg-object #(some #{(.getType ^PGobject %)} ["json" "jsonb"])))
 (s/def ::pg-json->coll-args (s/cat :pg-json ::pg-json))
 (s/def ::pg-json->coll-ret coll?)
 (s/fdef pg-json->coll
@@ -165,7 +166,7 @@
 
 (defn pg-json->coll
   "Convert PostgreSQL Object `pg-object` into a Clojure collection."
-  [pg-json]
+  [^PGobject pg-json]
   {:pre [(s/valid? ::pg-json pg-json)]}
   (json/decode (.getValue pg-json) #(keyword (convert-identifiers-option-fn %))))
 
@@ -187,7 +188,7 @@
   (if-not (instance? java.sql.SQLException e)
     {:success? false
      :error-details {:error-type :unkown-sql-error}}
-    (if-let [sql-state (.getSQLState e)]
+    (if-let [sql-state (.getSQLState ^SQLException e)]
       (cond
         ;; Various types of contraint integrity errors (missing
         ;; primary key, NULL value for a non-NULL, columns, UNIQUE
