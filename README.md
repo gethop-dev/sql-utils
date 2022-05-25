@@ -3,7 +3,7 @@
 
 # dev.gethop/sql-utils
 
-A Clojure library designed as a thin convenience wapper over [`clojure.java.jdbc`](https://github.com/clojure/java.jdbc). It wraps most used `clojure.java.jdbc` methods in transactions and logs all query results details (for both successful and failed ones) to the provided logger.
+A Clojure library designed as a thin convenience wrapper over [`clojure.java.jdbc`](https://github.com/clojure/java.jdbc). It wraps most used `clojure.java.jdbc` methods in transactions and logs all query results details (for both successful and failed ones) to the provided logger.
 
 The logger must implement the [`duct.logger/Logger`](https://github.com/duct-framework/logger) protocol. Note that `nil` is valid logger value, although not a very useful one (all log entries are discarded).
 
