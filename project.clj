@@ -1,4 +1,4 @@
-(defproject dev.gethop/sql-utils "0.4.13-SNAPSHOT"
+(defproject dev.gethop/sql-utils "0.4.13"
   :description "A library designed as a thin convenience wrapper over clojure.java.jdbc"
   :url "https://github.com/gethop-dev/sql-utils"
   :license {:name "Mozilla Public Licence 2.0"

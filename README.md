@@ -1,5 +1,5 @@
-[![Build Status](https://api.travis-ci.com/magnetcoop/sql-utils.svg?branch=master)](https://travis-ci.com/magnetcoop/sql-utils)
-[![Clojars Project](https://img.shields.io/clojars/v/magnet/sql-utils.svg)](https://clojars.org/magnet/sql-utils)
+[![ci-cd](https://github.com/gethop-dev/sql-utils/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/gethop-dev/sql-utils/actions/workflows/ci-cd.yml)
+[![Clojars Project](https://img.shields.io/clojars/v/dev.gethop/sql-utils.svg)](https://clojars.org/dev.gethop/sql-utils)
 
 # dev.gethop/sql-utils
 
@@ -9,7 +9,7 @@ The logger must implement the [`duct.logger/Logger`](https://github.com/duct-fra
 
 ## Installation
 
-[![Clojars Project](https://clojars.org/magnet/sql-utils/latest-version.svg)](https://clojars.org/magnet/sql-utils)
+[![Clojars Project](https://clojars.org/dev.gethop/sql-utils/latest-version.svg)](https://clojars.org/dev.gethop/sql-utils)
 
 ## Usage
 
