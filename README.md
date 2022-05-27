@@ -1,7 +1,7 @@
 [![ci-cd](https://github.com/gethop-dev/sql-utils/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/gethop-dev/sql-utils/actions/workflows/ci-cd.yml)
 [![Clojars Project](https://img.shields.io/clojars/v/dev.gethop/sql-utils.svg)](https://clojars.org/dev.gethop/sql-utils)
 
-# dev.gethop/sql-utils
+# sql-utils
 
 A Clojure library designed as a thin convenience wrapper over [`clojure.java.jdbc`](https://github.com/clojure/java.jdbc). It wraps most used `clojure.java.jdbc` methods in transactions and logs all query results details (for both successful and failed ones) to the provided logger.
 
