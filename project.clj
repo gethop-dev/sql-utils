@@ -18,15 +18,11 @@
                                       :username :env/CLOJARS_USERNAME
                                       :password :env/CLOJARS_PASSWORD
                                       :sign-releases false}]]
-  :codox
-  {:output-path "docs/api"
-   :metadata {:doc/format :markdown}}
   :profiles
   {:dev [:project/dev :profiles/dev]
    :repl {:repl-options {:host "0.0.0.0"
                          :port 4001}}
    :profiles/dev {}
    :project/dev {:plugins [[jonase/eastwood "1.2.3"]
-                           [lein-cljfmt "0.8.0"]
-                           [lein-codox "0.10.8"]]
+                           [lein-cljfmt "0.8.0"]]
                  :dependencies [[com.h2database/h2 "2.1.212"]]}})

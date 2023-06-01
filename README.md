@@ -13,7 +13,7 @@ The logger must implement the [`duct.logger/Logger`](https://github.com/duct-fra
 
 ## Usage
 
-See [API Docs](https://gethop-dev.github.io/sql-utils/api/) and [`clojure.java.jdbc`](https://github.com/clojure/java.jdbc) documentation.
+See [API Docs](https://cljdoc.org/d/dev.gethop/sql-utils/) and [`clojure.java.jdbc`](https://github.com/clojure/java.jdbc) documentation.
 
 ## License
 

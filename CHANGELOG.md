@@ -5,11 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+- Remove `codox` generated pages. cljdoc.org already creates the API docs pages, as part of the publishing to clojars.org.
+
 ## [0.4.13] - 2022-05-25
 ### Changed
 - Moving the repository to [gethop-dev](https://github.com/gethop-dev) organization
 - CI/CD solution switch from [TravisCI](https://travis-ci.org/) to [GitHub Actions](Ihttps://github.com/features/actions)
-  - `lein`, `cljfmt`, `eastwood`, `codox` and `h2database` dependencies bump
+- `lein`, `cljfmt`, `eastwood`, `codox` and `h2database` dependencies bump
 
 ### Added
 - Source code linting using [clj-kondo](https://github.com/clj-kondo/clj-kondo)
